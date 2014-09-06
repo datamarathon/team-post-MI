@@ -81,11 +81,46 @@ select distinct subject_id, charttime, itemid
 from "MIMIC2V26"."medevents" a 
 where itemid like '43' OR itemid like '307' OR (itemid like '47' OR itemid like '120')
 union all
-select distinct subject_id, charttime, ioitemid as itemid from "MIMIC2V26"."deliveries" AS "del_ev" 
-	join "MIMIC2V26"."d_ioitems" "d_io" on "del_ev".ioitemid="d_io".itemid 
-where "d_io"."LABEL" like '%Dopamine%' OR "d_io"."LABEL" like '%Levophed%'
-union all
 select distinct subject_id, charttime, itemid from "MIMIC2V26"."ioevents" AS "io_ev"
 	join "MIMIC2V26"."d_ioitems" "d_io" on "io_ev".itemid= "d_io".itemid
+where "d_io"."LABEL" like '%Dopamine%' OR "d_io"."LABEL" like '%Levophed%'
+union all
+select distinct subject_id, charttime, ioitemid from "MIMIC2V26"."deliveries" AS "del_ev" 
+	join "MIMIC2V26"."d_ioitems" "d_io" on "del_ev".ioitemid="d_io".itemid 
 where "d_io"."LABEL" like '%Dopamine%' OR "d_io"."LABEL" like '%Levophed%')
 order by charttime
+
+---creating table of patients who receive dopamine
+CREATE table "USER7"."dopamine_table" as 
+(select * from
+ (
+select distinct subject_id, charttime, icustay_id 
+from "MIMIC2V26"."medevents" a 
+where itemid like '43' OR itemid like '307'
+union all
+select distinct subject_id, charttime, icustay_id from "MIMIC2V26"."deliveries" AS "del_ev" 
+	join "MIMIC2V26"."d_ioitems" "d_io" on "del_ev".ioitemid="d_io".itemid 
+where "d_io"."LABEL" like '%Dopamine%'
+union all
+select distinct subject_id, charttime, icustay_id from "MIMIC2V26"."ioevents" AS "io_ev"
+	join "MIMIC2V26"."d_ioitems" "d_io" on "io_ev".itemid= "d_io".itemid
+where "d_io"."LABEL" like '%Dopamine%'))
+
+---Viewing dopamine table--
+select top 100 * from "USER7"."dopamine_table"
+
+---creating table of patients who receive levophed
+CREATE table "USER7"."dopamine_table" as 
+(select * from
+ (
+select distinct subject_id, charttime, icustay_id 
+from "MIMIC2V26"."medevents" a 
+where itemid like '43' OR itemid like '307'
+union all
+select distinct subject_id, charttime, icustay_id from "MIMIC2V26"."deliveries" AS "del_ev" 
+	join "MIMIC2V26"."d_ioitems" "d_io" on "del_ev".ioitemid="d_io".itemid 
+where "d_io"."LABEL" like '%Dopamine%'
+union all
+select distinct subject_id, charttime, icustay_id from "MIMIC2V26"."ioevents" AS "io_ev"
+	join "MIMIC2V26"."d_ioitems" "d_io" on "io_ev".itemid= "d_io".itemid
+where "d_io"."LABEL" like '%Dopamine%'))

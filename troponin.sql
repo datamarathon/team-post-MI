@@ -1,12 +1,11 @@
-select * from "MIMIC2V26"."d_labitems" where loinc_description like '%ropo%' limit 150
+--2747 subjects have a trop over 1 at some point
 
-select * from "MIMIC2V26"."labevents" where itemid in (50189, 50188) and valuenum > 1 limit 150
+select * from (
 
-select count(*) from(
-
-select distinct subject_id
+select subject_id, hadm_id, icustay_id, charttime, valuenum
 from "MIMIC2V26"."labevents" 
 where itemid in (50189, 50188) and valuenum > 1 
-order by subject_id
-
+order by valuenum desc
 )
+
+limit 15

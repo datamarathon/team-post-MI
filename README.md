@@ -22,3 +22,17 @@ Team
 * Miriam Makhlouf
 * Andrew Ward
 * Andy Zimolzak
+
+What is this I don't even
+----
+
+This is code written by our team during the second Critical Data
+hackathon at MIT, September 5-7, 2014. We are querying the MIMIC II
+Database. This is a publicly and freely available clinical database
+that encompasses a large population of ICU patients and includes lab
+results, electronic documentation, and bedside monitor trends and
+waveforms.
+
+https://mimic.physionet.org/
+
+http://criticaldata.mit.edu/

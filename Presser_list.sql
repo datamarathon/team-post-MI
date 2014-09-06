@@ -164,3 +164,5 @@ CREATE table "USER7"."drug_first_w_HADM" as
 (select a.*, b.hadm_id
 from "USER7"."drug_first_table" a
 	join "MIMIC2V26"."icustay_detail" b on a.dop_icustay_id = b.icustay_id)
+	
+COMMENT ON TABLE "USER7"."drug_first_w_HADM" IS 'Pt drug first list w HADM'

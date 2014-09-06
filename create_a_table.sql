@@ -1,8 +1,6 @@
-select count(*)
-from
-"MIMIC2V26"."noteevents"
-where "MIMIC2V26"."noteevents".
+create table "USER7"."TEST_TABLE" AS (select * from "MIMIC2V26"."d_chartitems"
+where label like '%PCWP%' or label like '%Wedge%' or label like '%Pcwp%' or label like '%wedge%' or label like '%LVEDP%'
+or label like '%LVEDP%'  or label like '%Lvedp%')
 
-select count(*)
-from 
-"MIMIC2V26"."demographic_detail"
+
+

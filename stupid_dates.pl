@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+# usage: ./stupid_dates.pl ~/Dropbox/out.csv > ~/Dropbox/fixeddates.csv
 use strict;
 
 while(<>){

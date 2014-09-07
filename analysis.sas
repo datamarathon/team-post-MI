@@ -11,7 +11,7 @@ data WORK.FIXEDDATES    ;
    informat HADM_ID comma32. ;
    informat GENDER $1. ;
    informat DOB DATE9. ;
-   informat DOD $30. ;
+   informat DOD DATE9. ;
    informat EXPIRE_FLG $1. ;
    informat HOSPITAL_ADMIT_DT DATE9. ;
    informat HOSPITAL_DISCH_DT DATE9. ;
@@ -22,7 +22,7 @@ data WORK.FIXEDDATES    ;
    format HADM_ID comma12. ;
    format GENDER $1. ;
    format DOB DATE9. ;
-   format DOD $30. ;
+   format DOD DATE9. ;
    format EXPIRE_FLG $1. ;
    format HOSPITAL_ADMIT_DT DATE9. ;
    format HOSPITAL_DISCH_DT DATE9. ;
@@ -54,6 +54,14 @@ data fix_dod;
 	beginning = substr(dod, 1, 12);
 	fixed_dod = input(beginning,);
 run;
+
+data has_timevar;
+	set fixeddates;
+	if expire_flg = "Y" then time = dod - hospital_admit_dt;
+	if expire_flg = "N" then time = hospital_disch_dt - hospital_admit_dt;
+run;
+
+
 
 
 /*

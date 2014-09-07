@@ -76,3 +76,7 @@ proc lifetest data=has_timevar(where=(first_drug1 ne "BOTH"));
 	strata first_drug1;
 run;
 
+ods graphics off;
+proc freq data=rawdata;
+	table hospital_expire_flg * first_drug / norow chisq fisher nopercent;
+run;

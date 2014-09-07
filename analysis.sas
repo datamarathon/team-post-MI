@@ -66,12 +66,13 @@ data has_timevar;
 run;
 
 ods graphics on;
-proc lifetest;
+proc lifetest data=has_timevar(where=(first_drug1 ne "BOTH"));
 	time time * censor(1);
 	strata first_drug1;
 run;
 
-proc lifetest;
+proc lifetest data=has_timevar(where=(first_drug1 ne "BOTH"));
 	time htime * hcensor(1);
 	strata first_drug1;
 run;
+

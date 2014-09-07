@@ -60,6 +60,9 @@ data has_timevar;
 	if expire_flg = "Y" then time = dod - hospital_admit_dt;
 	if expire_flg = "N" then time = hospital_disch_dt - hospital_admit_dt;
 	censor = (expire_flg eq "N");
+	if hospital_expire_flg = "Y" then htime = dod - hospital_admit_dt;
+	if hospital_expire_flg = "N" then htime = hospital_disch_dt - hospital_admit_dt;
+	hcensor = (hospital_expire_flg eq "N");
 run;
 
 ods graphics on;
@@ -68,14 +71,7 @@ proc lifetest;
 	strata first_drug1;
 run;
 
-
-
-/*
-proc lifetest
-time t * c(1)
-t is time var
-c is cens var and 1 means cens
-strata foo
-time is time from rand til cens or death
-*/
-
+proc lifetest;
+	time htime * hcensor(1);
+	strata first_drug1;
+run;

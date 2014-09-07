@@ -15,6 +15,12 @@ http://www.ncbi.nlm.nih.gov/pubmed/20200382
 
 http://www.nejm.org/doi/full/10.1056/NEJMoa0907118
 
+
+Results
+-------
+
+![survival curves](https://dl.dropboxusercontent.com/u/38640281/xfiles/inhospital-mort.png)
+
 Team
 ----
 * Ben Geisler

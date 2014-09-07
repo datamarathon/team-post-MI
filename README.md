@@ -15,11 +15,36 @@ http://www.ncbi.nlm.nih.gov/pubmed/20200382
 
 http://www.nejm.org/doi/full/10.1056/NEJMoa0907118
 
+Methods
+-------
+
+MI defined as troponin-I or troponin-T > 1 mcg / L.
+
+Cardiogenic shock defined as (cardiac output < 4 L / min AND wedge
+pressure > 12 mmHg) OR ICD-9 code for cardiogenic shock OR hit on
+"cardiogenic shock" free text in a clinical note.
 
 Results
 -------
 
+Dopamine, n=118. In hospital mortaliy 46.6%
+
+Norepinephrine n=44. In hospital mortaliy 68.2%
+
+Both pressors ordered simultaneously, n=29. In hospital mortaliy 62.1%.
+
+Fisher's exact P = 0.033.
+
 ![survival curves](https://dl.dropboxusercontent.com/u/38640281/xfiles/inhospital-mort.png)
+
+Log-rank test for these curves, P = 0.004
+
+Conclusions
+----
+
+Our results are unadjusted for any confounding by indication. Crude
+results suggest the dopamine group has better survival. This is *in
+contrast* to the SOAP II trial.
 
 Team
 ----

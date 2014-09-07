@@ -59,8 +59,14 @@ data has_timevar;
 	set fixeddates;
 	if expire_flg = "Y" then time = dod - hospital_admit_dt;
 	if expire_flg = "N" then time = hospital_disch_dt - hospital_admit_dt;
+	censor = (expire_flg eq "N");
 run;
 
+ods graphics on;
+proc lifetest;
+	time time * censor(1);
+	strata first_drug1;
+run;
 
 
 

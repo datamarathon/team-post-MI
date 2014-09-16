@@ -1,19 +1,3 @@
-/*
-create table "USER7"."PRESSOR_DOPE" AS (
-select distinct subject_id, min(charttime) as "min_chart_time", icustay_id
-from "MIMIC2V26"."medevents" a
-	JOIN "MIMIC2V26"."d_meditems" b on a.itemid=b.itemid
-where b.label like '%Dopamine%'
-group by subject_id, icustay_id
-union
-select distinct subject_id, min(charttime) as "min_chart_time", icustay_id
-from "MIMIC2V26"."ioevents" a
-	JOIN "MIMIC2V26"."d_ioitems" b on a.itemid=b.itemid
-where b.label like '%Dopamine%'
-group by subject_id, icustay_id)
---3,966
-*/
-
 --CLEAN UP SUPLICATE HADM_ID X SUBJECT_ID
 CREATE TABLE "USER7"."CLEAN_HIGH_TROP" AS (SELECT DISTINCT SUBJECT_ID, HADM_ID
 FROM "USER7"."high_troponins")

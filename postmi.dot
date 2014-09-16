@@ -1,0 +1,57 @@
+digraph {
+
+//troponin.sql
+labevents -> high_troponins;
+
+//DataMarathon_V1.sql
+icd9 -> icd9_cs_pnts;
+noteevents -> notes_cs_ptnts;
+chartevents -> chartcopcwp_cs_ptnts;
+
+icd9_cs_pnts -> all_cs_ptnts;
+notes_cs_ptnts -> all_cs_ptnts;
+chartcopcwp_cs_ptnts -> all_cs_ptnts;
+
+all_cs_ptnts -> all_det_cs_ptnts;
+icd9_cs_pnts -> all_det_cs_ptnts;
+notes_cs_ptnts -> all_det_cs_ptnts;
+chartcopcwp_cs_ptnts -> all_det_cs_ptnts;
+
+//Presser_list.sql
+
+medevents -> dopamine_table;
+deliveries -> dopamine_table;
+ioevents -> dopamine_table;
+dopamine_table -> uni_dop_table;
+
+medevents -> norepi_table;
+deliveries -> norepi_table;
+ioevents -> norepi_table;
+norepi_table -> uni_nor_table;
+
+uni_nor_table -> combine_pressers_table;
+uni_dop_table -> combine_pressers_table;
+
+combine_pressers_table -> drug_first_table;
+
+icustay_detail -> drug_first_w_HADM;
+drug_first_table -> drug_first_w_HADM;
+
+// Andrew_Pulling it together.sql
+
+high_troponins -> clean_high_trop;
+all_det_cs_ptnts -> clean_cs;
+drug_first_w_HADM -> clean_pressor;
+
+clean_high_trop -> all_ptnts;
+clean_cs -> all_ptnts;
+clean_pressor -> all_ptnts;
+
+clean_high_trop -> final_ptnts;
+clean_cs -> final_ptnts;
+clean_pressor -> final_ptnts;
+
+icustay_detail -> "Anonymous export";
+final_ptnts -> "Anonymous export";
+
+}

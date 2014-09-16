@@ -24,6 +24,18 @@ Cardiogenic shock defined as (cardiac output < 4 L / min AND wedge
 pressure > 12 mmHg) OR ICD-9 code for cardiogenic shock OR hit on
 "cardiogenic shock" free text in a clinical note.
 
+How to run:
+
+1. Run queries troponin.sql, DataMarathon_V1.sql, and
+Presser_list.sql, in no particular order.
+
+2. Run "Andrew_Pulling it together.sql" and export the result of the
+final SELECT statement (for steps 1 and 2, see directed graph figure).
+
+3. Run stupid_dates.pl on the exported data.
+
+4. Run analysis.sas
+
 ![directed graph of queries](https://dl.dropboxusercontent.com/u/38640281/xfiles/postmi_graph.png)
 
 Results

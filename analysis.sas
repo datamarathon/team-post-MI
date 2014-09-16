@@ -44,15 +44,12 @@ input
 if _ERROR_ then call symputx('_EFIERR_',1);  
 run;
 
-
-proc freq data=rawdata(where=(first_drug ne 'BOTH'));
+proc freq data=fixeddates(where=(first_drug ne 'BOTH'));
 	table hospital_expire_flg * first_drug / norow chisq nopercent;
 run;
 
-data fix_dod;
-	set rawdata;
-	beginning = substr(dod, 1, 12);
-	fixed_dod = input(beginning,);
+proc freq data=fixeddates;
+	table hospital_expire_flg * first_drug / norow chisq fisher nopercent;
 run;
 
 data has_timevar;
@@ -66,6 +63,7 @@ data has_timevar;
 run;
 
 ods graphics on;
+
 proc lifetest data=has_timevar(where=(first_drug1 ne "BOTH"));
 	time time * censor(1);
 	strata first_drug1;
@@ -74,9 +72,4 @@ run;
 proc lifetest data=has_timevar(where=(first_drug1 ne "BOTH"));
 	time htime * hcensor(1);
 	strata first_drug1;
-run;
-
-ods graphics off;
-proc freq data=rawdata;
-	table hospital_expire_flg * first_drug / norow chisq fisher nopercent;
 run;

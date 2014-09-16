@@ -24,6 +24,8 @@ Cardiogenic shock defined as (cardiac output < 4 L / min AND wedge
 pressure > 12 mmHg) OR ICD-9 code for cardiogenic shock OR hit on
 "cardiogenic shock" free text in a clinical note.
 
+![directed graph of queries](https://dl.dropboxusercontent.com/u/38640281/xfiles/postmi_graph.png)
+
 Results
 -------
 

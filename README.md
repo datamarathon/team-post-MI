@@ -76,7 +76,7 @@ hackathon at MIT, September 5-7, 2014. We are querying the MIMIC II
 Database. This is a publicly and freely available clinical database
 that encompasses a large population of ICU patients and includes lab
 results, electronic documentation, and bedside monitor trends and
-waveforms.
+waveforms....
 
 https://mimic.physionet.org/
 

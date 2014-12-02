@@ -5,6 +5,6 @@ where (
     and text like '%spicula%'
     and text like '%CHEST%'
     and text like '% CT %'
-    and (text like '%cancer%' or text like '%malign%')
+    and text like '%lung cancer%'
 )
 limit 20;

@@ -21,7 +21,7 @@ from (
 		from mimic2v26.chartevents a
 			--JOIN mimic2v26."icustay_detail" B ON A.ICUSTAY_ID=B.ICUSTAY_ID
 		where a.itemid  in ('90', '89', '1602', '2112')
-		and value1num <4 AND value1num not like '%$%'	) a
+		and value1num <4 	) a
 			join (select distinct A.subject_id, A.ICUSTAY_ID--, HADM_ID --count(*) 
 					from mimic2v26.chartevents a
 						--JOIN mimic2v26."icustay_detail" B ON A.ICUSTAY_ID=B.ICUSTAY_ID
@@ -31,8 +31,10 @@ from (
 --1,128
 
 ----*CREATE TABLE* SELECT ALL PATIENTS WHO THROUGH ONE TEST OR ANOTHER HAVE AN INDICATOR OF CARDIOGENIC SHOCK
+alter table public.icd9_cs_pnts add column icustay_id integer;
+
 CREATE TABLE public.ALL_CS_PTNTS AS (
-SELECT DISTINCT SUBJECT_ID, HADM_ID, NULL AS "ICUSTAY_ID"
+SELECT DISTINCT SUBJECT_ID, HADM_ID, ICUSTAY_ID
 FROM public.ICD9_CS_PNTS
 UNION 
 SELECT DISTINCT SUBJECT_ID, HADM_ID, ICUSTAY_ID

@@ -1,23 +1,54 @@
---additives, using two D tables
-select d_meditems.label as mlabel, d_ioitems.label as ilabel, additives.*
-from additives, d_meditems, d_ioitems
-where additives.itemid = d_meditems.itemid and additives.ioitemid = d_ioitems.itemid and rownum <=10
-
-
-
---high troponins
-select d_labitems.test_name, labevents.itemid, labevents.subject_id, labevents.hadm_id, labevents.icustay_id, labevents.charttime, labevents.valuenum
-from labevents, d_labitems
-where labevents.itemid in (50189, 50188) and labevents.valuenum > 1 and labevents.itemid=d_labitems.itemid and rownum <=10
-
-
---simple radiology
+--simple radiology (NOTEEVENTS)
 select category, text
 from noteevents
 where category = 'RADIOLOGY_REPORT' and rownum <=10
-
 
 --radiology with pattern match. Takes about 30 sec Query Builder.
 select category, text
 from noteevents
 where category = 'RADIOLOGY_REPORT' and text like '%spicula%' and rownum <=10
+
+--Heart failure discharges. takes quite a while.
+select category, text, subject_id, charttime, realtime, elemid, exam_name
+from noteevents 
+where category = 'DISCHARGE_SUMMARY' and text like '%acute decompensated heart%' and rownum <= 10
+
+--MD notes
+select category, text, subject_id, charttime
+from noteevents 
+where category = 'MD Notes' and rownum <=10
+
+
+
+
+--CHARTEVENTS
+select d_chartitems.label, chartevents.*
+from chartevents, d_chartitems
+where d_chartitems.itemid=chartevents.itemid and rownum<=40 and chartevents.itemid=38
+
+select d_chartitems.label, chartevents.*
+from chartevents, d_chartitems
+where d_chartitems.itemid=chartevents.itemid and rownum<=40 and chartevents.itemid=59
+
+
+--MEDEVENTS
+select d_meditems.label, medevents.*
+from medevents, d_meditems
+where d_meditems.itemid=medevents.itemid and rownum<=40
+
+
+--high troponins (LABEVENTS)
+select d_labitems.test_name, labevents.itemid, labevents.subject_id, labevents.hadm_id, labevents.icustay_id, labevents.charttime, labevents.valuenum
+from labevents, d_labitems
+where labevents.itemid in (50189, 50188) and labevents.valuenum > 1 and labevents.itemid=d_labitems.itemid and rownum <=10
+
+
+--ICD9: just look at it.
+--comorbidity: look at
+--icustay_detail: look at.
+
+
+--additives, using two D tables
+select d_meditems.label as mlabel, d_ioitems.label as ilabel, additives.*
+from additives, d_meditems, d_ioitems
+where additives.itemid = d_meditems.itemid and additives.ioitemid = d_ioitems.itemid and rownum <=10

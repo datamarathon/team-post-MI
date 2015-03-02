@@ -1,5 +1,5 @@
 \documentclass{tufte-handout}
-\title{MIMIC-II Intro for MAVERIC NLP Group}
+\title{MIMIC-II Intro for the MAVERIC NLP Group}
 \author{Andy Zimolzak, MD, MMSc}
 \date{March 3, 2015}
 
@@ -71,16 +71,16 @@ with more database skills than me might prefer to run their favorite
 SQL directly rather than Postgres on top of the VM.
 
 \paragraph{Query builder:} This is a Web gateway that lets you enter
-SQL.\footnote{https://mimic2app.csail.mit.edu/ querybuilder/} Log in
-with your PhysioNet username and password.
+SQL code.\footnote{https://mimic2app.csail.mit.edu/ querybuilder/} Log
+in with your PhysioNet username and password.
 
 \section{Actually using MIMIC-II}
 
 If you just want text notes, without any corroborating structured
-data, the one and only table for you is \texttt{NOTEEVENTS}. Fun
-query: \texttt{select text from noteevents where ROWNUM <= 10}. Or
-also try (be patient): \texttt{select count(*), category from
-  noteevents group by category}. Results below:
+data, the one and only table for you is \texttt{NOTEEVENTS}. Dive in
+with query builder: \texttt{select text from noteevents where ROWNUM
+  <= 10}. Or also try (be patient): \texttt{select count(*), category
+  from noteevents group by category}. Results below:
 
 ~\\
 
@@ -97,8 +97,8 @@ MD Notes & 23,285 \\
 
 ~\\
 
-There are 40 tables and 5 premade views. It is reasonably well
-documented. There is a user
+In all of MIMIC there are 40 tables and 5 premade views. It is
+reasonably well documented. There is a user
 guide\footnote{mimic.physionet.org/\\Ecocide/UserGuide.pdf} that has
 E-R diagrams of the schema, etc., and there is a SQL
 cookbook.\footnote{www.physionet.org/\\mimic2/demo/\\MIMICIICookBook\_v1.pdf}
@@ -113,18 +113,18 @@ doesn't seem to understand \texttt{SELECT TOP 10} or \texttt{LIMIT
   10}. It also hates semicolons. The MIMIC VM is Postgres, so there
 you would use \texttt{LIMIT 10}. 
 
-Other good tables: chartevents, icd9, ioevents, labevents, medevents, deliveries.
-Chartevents has \emph{lots} of vital sign and other data. Note that it
-is ``charted'' by actual humans, which is arguably a benefit because
-they vet it before charting. There is an important relation between
+Other good tables: chartevents, icd9, ioevents, labevents, medevents,
+deliveries, poe\_med. Chartevents has \emph{lots} of vital sign and
+other data. Note that it is ``charted'' by actual humans, which has
+pros and cons. There is an important relation between
 chartevents.itemid and d\_chartitems.itemid. This relation exists
-analogously for many of the $x$-events and d\_$x$-items tables. There
-is also a useful view comorbidity\_scores, which contains scores on
+analogously for many of the $x$-events and d\_$x$-items tables. The
+view comorbidity\_scores is useful. It contains calculated scores on
 how many other significant diseases a patient has in the past.
 Finally, icustay\_detail is an \emph{extremely} useful view with 42
 columns, somewhat denormalized. The icustay\_detail view includes SAPS
-and SOFA, which are scores of ``how sick'' a patient is at a given
-point in time.
+and SOFA, which are calculated scores of ``how sick'' a patient is at
+a given point in time.
 
 Some important ``unit of analysis'' ID numbers are icustay\_id,
 hadm\_id, and subject\_id. Remember, ICU stay $\subset$ hospital

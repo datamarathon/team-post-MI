@@ -37,6 +37,13 @@ from medevents, d_meditems
 where d_meditems.itemid=medevents.itemid and rownum<=40
 
 
+--POE_MED. Don't run this. Pull up the CSV. Also just inspect table.
+select count(*), form_unit_disp
+from poe_med
+group by form_unit_disp
+order by count(*) desc
+
+
 --high troponins (LABEVENTS)
 select d_labitems.test_name, labevents.itemid, labevents.subject_id, labevents.hadm_id, labevents.icustay_id, labevents.charttime, labevents.valuenum
 from labevents, d_labitems
@@ -44,7 +51,9 @@ where labevents.itemid in (50189, 50188) and labevents.valuenum > 1 and labevent
 
 
 --ICD9: just look at it.
+
 --comorbidity: look at
+
 --icustay_detail: look at.
 
 

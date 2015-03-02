@@ -1,5 +1,5 @@
 \documentclass{tufte-handout}
-\title{MIMIC-II for MAVERIC NLP}
+\title{MIMIC-II Intro for MAVERIC NLP Group}
 \author{Andy Zimolzak, MD, MMSc}
 \date{March 3, 2015}
 
@@ -19,68 +19,68 @@ Center from 2001--2008.\footnote{Saeed M, Villarroel M, Reisner AT,
   May;39(5):952–960. PMID: 21283005}\footnote{Lee J, Scott DJ,
   Villarroel M, Clifford GD, Saeed M, Mark RG. Open-access MIMIC-II
   database for intensive care research. Conf Proc IEEE Eng Med Biol
-  Soc 2011;2011:8315–8318. PMID: 22256274} Data includes demographics,
-vital signs, intravenous medication drip rates, laboratory test
-results, deidentified\footnote{Neamatullah I, Douglass MM, Lehman
-  L-WH, Reisner A, Villarroel M, Long WJ, \emph{et al.} Automated
-  de-identification of free-text medical records. BMC Med Inform Decis
-  Mak 2008;8:32. PMID: 18652655 } clinical notes (ICU physician,
-nurse, radiology), and 125 Hz physiological waveforms. The database is
-maintained by the MIT Laboratory of Computational Physiology.
+  Soc 2011;2011:8315–8318. PMID: 22256274} It is maintained by MIT's
+Laboratory of Computational Physiology. Data includes demographics,
+vital signs, medications, laboratory results,
+deidentified\footnote{Neamatullah I, Douglass MM, Lehman L-WH, Reisner
+  A, Villarroel M, Long WJ, \emph{et al.} Automated de-identification
+  of free-text medical records. BMC Med Inform Decis Mak 2008;8:32.
+  PMID: 18652655 } clinical notes (ICU physician, nurse, radiology),
+and 125 Hz physiological waveforms. MIMIC-II contains data \emph{only}
+about patients who spent some time in an ICU. If the patient was
+transferred into the ICU from the ``general wards,'' then MIMIC went
+back in time to grab structured data from the wards (usually labs but
+never vital signs or notes). MIMIC-II also has Social Security Death
+Index data, so it can tell you when/if a patient died \emph{after}
+leaving the hospital.
+
+Note that dates are also deidentified by shifting them \emph{a lot,}
+such as into the year 3300. If your analysis software can't comprehend
+this, you could subtract 1000 from dates in SQL before exporting.
+Dates do preserve seasons of the year. 
+
 
 \section{Permissions and logistics of setup}
 
 You can get structured data (no text notes) on 4000 deceased patients
 without signing anything at all. Waveforms also do not require data
-use agreement (DUA). How to get full access: do online human research
-program. Make physionetworks account. apply for access to MIMIC II
-Clinical by clicking I Agree on physionetworks. Reply to the e-mail
-you get, complete the DUA, and attach human subject certificate. DUA
-is 243 words long, which is \emph{extraordinarily} simple. A key
+use agreement (DUA). How to get full access, in four easy steps:
+Complete any online human research course. Make a PhysioNetWorks
+account. Apply for access to MIMIC II Clinical by clicking ``I Agree''
+under the MIMIC section of PhysioNetWorks. Reply to the e-mail you
+get, complete the DUA, and attach your human subject certificate. The
+DUA is 243 words long, which is \emph{extraordinarily} simple. A key
 point, though, is provision number 3: ``I will not share access to
 restricted data from PhysioNet with anyone else.''
 
-There is a query builder and a virtual machine,\footnote{Scott DJ, Lee
-  J, Silva I, Park S, Moody GB, Celi LA, \emph{et al.} Accessing the
-  public MIMIC-II intensive care relational database for clinical
-  research. BMC Med Inform Decis Mak 2013;13:9. PMID: 23302652 } and I
-\emph{highly} recommend both of these. The VM is Postgres on Ubuntu
-Linux on Oracle VirtualBox. The MIMIC-II data except for waveforms is
-about 55 GB (VM by default will occupy about 80 GB for its disk
-image).
+The MIT researchers\footnote{Scott DJ, Lee J, Silva I, Park S, Moody
+  GB, Celi LA, \emph{et al.} Accessing the public MIMIC-II intensive
+  care relational database for clinical research. BMC Med Inform Decis
+  Mak 2013;13:9. PMID: 23302652 } package MIMIC in several ways,
+including a Web client and a virtual machine. I \emph{highly}
+recommend both.
 
-Took me 1--2 days to setup VM. Mostly troubleshooting VirtualBox,
-particularly its network setup. VM comes with a script that downloads
-the flat files and does all the indexing. Troubleshooting VirtualBox
-for me is easier than troubleshooting Postgres, but people with more
-database skills than me might prefer to run Postgres directly rather
-than on top of the VM.
+\paragraph{Virtual machine:} This has Postgres on Ubuntu Linux on Oracle
+VirtualBox. The MIMIC-II data except for waveforms is about 55 GB (VM
+by default will occupy about 80 GB for its disk image). It took me
+1--2 days to set up the VM: mostly troubleshooting VirtualBox,
+particularly its network setup. The VM comes with a script that
+downloads the flat files and does all the indexing. Troubleshooting
+VirtualBox for me is easier than troubleshooting Postgres, but people
+with more database skills than me might prefer to run their favorite
+SQL directly rather than Postgres on top of the VM.
 
-Query builder is a Web gateway that lets you enter
+\paragraph{Query builder:} This is a Web gateway that lets you enter
 SQL.\footnote{https://mimic2app.csail.mit.edu/ querybuilder/} Log in
 with your PhysioNet username and password.
 
 \section{Actually using MIMIC-II}
 
-There are 40 tables and 5 pre-made views. It is reasonably well
-documented. There is a ``SQL cookbook.''
-
-Query builder uses Oracle-like syntax. So you should say: \texttt{select *
-from d\_codeditems where ROWNUM <= 10}. That is, it doesn't seem to
-understand \texttt{SELECT TOP 10} or \texttt{LIMIT 10}. It also hates
-semicolons. The MIMIC VM is Postgres, so there you would use \texttt{LIMIT
-10}.
-
-It grabs floor data.
-
-I've participated in hackathons.
-
-Favorite tables: for NLP, the one and only table is \texttt{NOTEEVENTS}.
-
-Fun query: \texttt{select text from noteevents where ROWNUM <= 10}
-
-Takes a while: \texttt{select count(*), category from noteevents group by
-category}
+If you just want text notes, without any corroborating structured
+data, the one and only table for you is \texttt{NOTEEVENTS}. Fun
+query: \texttt{select text from noteevents where ROWNUM <= 10}. Or
+also try (be patient): \texttt{select count(*), category from
+  noteevents group by category}. Results below:
 
 ~\\
 
@@ -95,8 +95,46 @@ MD Notes & 23,285 \\
 \hline
 \end{tabular}
 
+~\\
+
+There are 40 tables and 5 premade views. It is reasonably well
+documented. There is a user
+guide\footnote{mimic.physionet.org/\\Ecocide/UserGuide.pdf} that has
+E-R diagrams of the schema, etc., and there is a SQL
+cookbook.\footnote{www.physionet.org/\\mimic2/demo/\\MIMICIICookBook\_v1.pdf}
+Additionally, I've participated in several hackathons using MIMIC-II
+as a data source, one of which encouraged people to use
+GitHub.\footnote{https://github.com/datamarathon} This can be a
+secondary resource of queries by example.
+
+Query builder uses Oracle-like syntax. So you should say:
+\texttt{select * from d\_codeditems where ROWNUM <= 10}. That is, it
+doesn't seem to understand \texttt{SELECT TOP 10} or \texttt{LIMIT
+  10}. It also hates semicolons. The MIMIC VM is Postgres, so there
+you would use \texttt{LIMIT 10}. 
+
+Other good tables: chartevents, icd9, ioevents, medevents, deliveries.
+Chartevents has \emph{lots} of vital sign and other data. Note that it
+is ``charted'' by actual humans, which is arguably a benefit because
+they vet it before charting. There is an important relation between
+chartevents.itemid and d\_chartitems.itemid. This relation exists
+analogously for many of the $x$-events and d\_$x$-items tables. There
+is also a useful view comorbidity\_scores, which contains scores on
+how many other significant diseases a patient has in the past.
+Finally, icustay\_detail is an \emph{extremely} useful view with 42
+columns, somewhat denormalized. The icustay\_detail view includes SAPS
+and SOFA, which are scores of ``how sick'' a patient is at a given
+point in time.
+
+Some important ``unit of analysis'' ID numbers are icustay\_id,
+hadm\_id, and subject\_id. Remember, ICU stay $\subset$ hospital
+admission $\subset$ subject. 
+
 \end{document}
 
 % LocalWords:  Multiparameter Saeed Villarroel Reisner Crit RG Conf Proc IEEE
 % LocalWords:  Neamatullah WH WJ de BMC Decis Mak waveforms DUA PhysioNet Celi
-% LocalWords:  Postgres VirtualBox username hackathons
+% LocalWords:  Postgres VirtualBox username hackathons PhysioNetWorks ROWNUM
+% LocalWords:  querybuilder NOTEEVENTS noteevents premade MIMICIICookBook pdf
+% LocalWords:  codeditems chartevents icd ioevents medevents itemid chartitems
+% LocalWords:  icustay hadm

@@ -15,7 +15,7 @@ intensive care unit (ICU) admissions at Beth Israel Deaconess Medical
 Center from 2001--2008.\footnote{Saeed M, Villarroel M, Reisner AT,
   Clifford G, Lehman L-W, Moody G, \emph{et al.} Multiparameter
   Intelligent Monitoring in Intensive Care II: a public-access
-  intensive care unit database. Crit. Care Med. 2011
+  intensive care unit database. Crit.\ Care Med. 2011
   May;39(5):952–960. PMID: 21283005}\footnote{Lee J, Scott DJ,
   Villarroel M, Clifford GD, Saeed M, Mark RG. Open-access MIMIC-II
   database for intensive care research. Conf Proc IEEE Eng Med Biol
@@ -25,25 +25,53 @@ results, deidentified\footnote{Neamatullah I, Douglass MM, Lehman
   L-WH, Reisner A, Villarroel M, Long WJ, \emph{et al.} Automated
   de-identification of free-text medical records. BMC Med Inform Decis
   Mak 2008;8:32. PMID: 18652655 } clinical notes (ICU physician,
-nurse, radiology), and 125 Hz physiological waveforms.
+nurse, radiology), and 125 Hz physiological waveforms. The database is
+maintained by the MIT Laboratory of Computational Physiology.
+
+\section{Permissions and logistics of setup}
+
+You can get structured data (no text notes) on 4000 deceased patients
+without signing anything at all. Waveforms also do not require data
+use agreement (DUA). How to get full access: do online human research
+program. Make physionetworks account. apply for access to MIMIC II
+Clinical by clicking I Agree on physionetworks. Reply to the e-mail
+you get, complete the DUA, and attach human subject certificate. DUA
+is 243 words long, which is \emph{extraordinarily} simple. A key
+point, though, is provision number 3: ``I will not share access to
+restricted data from PhysioNet with anyone else.''
 
 There is a query builder and a virtual machine,\footnote{Scott DJ, Lee
   J, Silva I, Park S, Moody GB, Celi LA, \emph{et al.} Accessing the
   public MIMIC-II intensive care relational database for clinical
   research. BMC Med Inform Decis Mak 2013;13:9. PMID: 23302652 } and I
-\emph{highly} recommend both of these.
+\emph{highly} recommend both of these. The VM is Postgres on Ubuntu
+Linux on Oracle VirtualBox. The MIMIC-II data except for waveforms is
+about 55 GB (VM by default will occupy about 80 GB for its disk
+image).
+
+Took me 1--2 days to setup VM. Mostly troubleshooting VirtualBox,
+particularly its network setup. VM comes with a script that downloads
+the flat files and does all the indexing. Troubleshooting VirtualBox
+for me is easier than troubleshooting Postgres, but people with more
+database skills than me might prefer to run Postgres directly rather
+than on top of the VM.
+
+Query builder is a Web gateway that lets you enter
+SQL.\footnote{https://mimic2app.csail.mit.edu/querybuilder/} Log in
+with your PhysioNet username and password.
+
+\section{Actually using MIMIC-II}
+
+It is reasonably well documented. There is a ``SQL cookbook.'' 
 
 It grabs floor data.
-
-how to get access. You can get structured data (no text notes) on 4000
-deceased patients without signing anything at all. Waveforms also do
-not require DUA. How to get full access: do online human research
-program. Make physionetworks account. apply for access to MIMIC II
-Clinical by clicking I Agree on physionetworks. Reply to the e-mail
-you get, complete the DUA, and attach human subject certificate.
 
 I've participated in hackathons.
 
 Favorite tables.
 
 \end{document}
+
+% LocalWords:  Multiparameter Saeed Villarroel Reisner Crit RG Conf Proc IEEE
+% LocalWords:  Neamatullah WH WJ de BMC Decis Mak waveforms DUA PhysioNet Celi
+% LocalWords:  Postgres VirtualBox username hackathons

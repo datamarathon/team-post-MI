@@ -11,3 +11,13 @@ from labevents, d_labitems
 where labevents.itemid in (50189, 50188) and labevents.valuenum > 1 and labevents.itemid=d_labitems.itemid and rownum <=10
 
 
+--simple radiology
+select category, text
+from noteevents
+where category = 'RADIOLOGY_REPORT' and rownum <=10
+
+
+--radiology with pattern match. Takes about 30 sec Query Builder.
+select category, text
+from noteevents
+where category = 'RADIOLOGY_REPORT' and text like '%spicula%' and rownum <=10

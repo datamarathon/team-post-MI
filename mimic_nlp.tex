@@ -57,18 +57,43 @@ database skills than me might prefer to run Postgres directly rather
 than on top of the VM.
 
 Query builder is a Web gateway that lets you enter
-SQL.\footnote{https://mimic2app.csail.mit.edu/querybuilder/} Log in
+SQL.\footnote{https://mimic2app.csail.mit.edu/ querybuilder/} Log in
 with your PhysioNet username and password.
 
 \section{Actually using MIMIC-II}
 
-It is reasonably well documented. There is a ``SQL cookbook.'' 
+There are 40 tables and 5 pre-made views. It is reasonably well
+documented. There is a ``SQL cookbook.''
+
+Query builder uses Oracle-like syntax. So you should say: \texttt{select *
+from d\_codeditems where ROWNUM <= 10}. That is, it doesn't seem to
+understand \texttt{SELECT TOP 10} or \texttt{LIMIT 10}. It also hates
+semicolons. The MIMIC VM is Postgres, so there you would use \texttt{LIMIT
+10}.
 
 It grabs floor data.
 
 I've participated in hackathons.
 
-Favorite tables.
+Favorite tables: for NLP, the one and only table is \texttt{NOTEEVENTS}.
+
+Fun query: \texttt{select text from noteevents where ROWNUM <= 10}
+
+Takes a while: \texttt{select count(*), category from noteevents group by
+category}
+
+~\\
+
+\begin{tabular}{l r}
+\hline
+Category & Count \\
+\hline
+Nursing/Other & 800,070 \\
+RADIOLOGY\_REPORT & 384,513 \\
+DISCHARGE\_SUMMARY & 31,958 \\
+MD Notes & 23,285 \\
+\hline
+\end{tabular}
 
 \end{document}
 
